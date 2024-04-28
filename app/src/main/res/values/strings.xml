@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">ProjetoFeevale</string>
+    <string name="title_activity_camera">Câmera</string>
+    <string name="title_activity_numerosde_contato">Números de Contato</string>
+    <string name="title_activity_fullscreen">Meus Pins</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="search">Search</string>
+    <string name="option_1">Option 1</string>
+    <string name="option_2">Option 2</string>
+    <string name="fab">fab</string>
+    <string name="bottom_bar">Bottom Bar</string>
 </resources>

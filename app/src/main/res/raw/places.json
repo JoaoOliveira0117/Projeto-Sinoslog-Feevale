@@ -1,0 +1,89 @@
+[
+    {
+        "geometry": {
+            "location": {
+                "lat": -29.6912342,
+                "lng": -51.1293726
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": -29.6912342,
+                    "lng": -51.1293726
+                },
+                "southwest": {
+                    "lat": -29.6912342,
+                    "lng": -51.1293726
+                }
+            }
+        },
+        "name": "Vigilância Ambiental em Saúde de Novo Hamburgo",
+        "rating": 4.5,
+        "vicinity": "R. Maj. Luís Bender, 245 - Centro"
+    },
+
+    {
+        "geometry": {
+            "location": {
+                "lat": -29.6868648,
+                "lng": -51.1218585
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": -29.6868648,
+                    "lng": -51.1218585
+                },
+                "southwest": {
+                    "lat": -29.6868648,
+                    "lng": -51.1218585
+                }
+            }
+        },
+        "name": "Prefeitura Municipal de Novo Hamburgo",
+        "rating": 4.5,
+        "vicinity": "R. Guia Lopes, 4201 - Rondônia"
+    },
+    {
+        "geometry": {
+            "location": {
+                "lat": -29.6895695,
+                "lng": -51.1089297
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": -29.6895695,
+                    "lng": -51.1089297
+                },
+                "southwest": {
+                    "lat": -29.6895695,
+                    "lng": -51.1089297
+                }
+            }
+        },
+        "name": " Diretoria de Proteção Ambiental ",
+        "rating": 4.5,
+        "vicinity": " R. Barão de Santo Ângelo, 1787 - Hamburgo Velho."
+    },
+    {
+        "geometry": {
+            "location": {
+                "lat": -29.7359065,
+                "lng": -51.0732611
+            },
+            "viewport": {
+                "northeast": {
+                    "lat": -29.7359065,
+                    "lng": -51.0732611
+                },
+                "southwest": {
+                    "lat": -29.7359065,
+                    "lng": -51.0732611
+                }
+            }
+        },
+        "name": "CANIL MUNICIPAL DE NOVO HAMBURGO (CEMPRA)",
+        "rating": 4.5,
+        "vicinity": "Estr. do Wallahay - Lomba Grande."
+    }
+
+
+]
