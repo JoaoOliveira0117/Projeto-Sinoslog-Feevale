@@ -2,8 +2,20 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ProjetoFeevale" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/Verde</item>
     </style>
 
     <style name="Theme.ProjetoFeevale" parent="Base.Theme.ProjetoFeevale" />
+
+    <style name="Theme.ProjetoFeevale.Fullscreen" parent="Theme.ProjetoFeevale">
+        <item name="android:actionBarStyle">@style/Widget.Theme.ProjetoFeevale.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.ProjetoFeevale.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
 </resources>
