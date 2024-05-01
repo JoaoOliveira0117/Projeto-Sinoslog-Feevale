@@ -1,53 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/fullscreenBackgroundColor"
-    android:theme="@style/ThemeOverlay.ProjetoFeevale.FullscreenContainer"
-    tools:context=".helpers.NumerosDeContato">
+    android:orientation="vertical">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
+    <!-- Título explicativo -->
     <TextView
-        android:id="@+id/fullscreen_content"
+        android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="?attr/fullscreenTextColor"
-        android:textSize="50sp"
+        android:layout_height="wrap_content"
+        android:text="Lista de Contatos"
+        android:textSize="20sp"
         android:textStyle="bold"
-        tools:ignore="TextContrastCheck" />
+        android:padding="16dp"
+        android:background="@color/Verde"
+        android:textColor="@android:color/black"/>
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
+    <!-- ListView para exibir a lista de contatos -->
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/VerdeEscuro"
+        android:dividerHeight="1dp"
+        android:background="@android:color/white" />
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="@style/Widget.Theme.ProjetoFeevale.ButtonBar.Fullscreen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <Button
-                android:id="@+id/dummy_button"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button"
-                android:textColor="#CDDC39" />
-
-        </LinearLayout>
-    </FrameLayout>
-
-</FrameLayout>
+</LinearLayout>
