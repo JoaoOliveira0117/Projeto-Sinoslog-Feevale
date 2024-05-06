@@ -20,8 +20,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.projetofeevale.activities.Camera;
 import com.example.projetofeevale.activities.MeusPins;
@@ -36,6 +38,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -45,15 +48,15 @@ import com.google.maps.android.clustering.ClusterManager;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-
-    private List<Place> places;
+    private GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        places = new PlacesReader(this).read();
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
+        mapFragment.getMapAsync(this);
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(v -> {
@@ -81,98 +84,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
             return false;
         });
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        // Ensure all places are visible in the map
-        googleMap.setOnMapLoadedCallback(() -> {
-            LatLngBounds.Builder bounds = LatLngBounds.builder();
-            for (Place place : places) {
-                bounds.include(place.getPosition());
-            }
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100));
-        });
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        this.googleMap = googleMap;
 
-        addClusteredMarkers(googleMap);
-
-        // Set custom info window adapter
-        //googleMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(this));
+        LatLng campoBom = new LatLng(-29.6760811, -51.0907438);
+        this.googleMap.addMarker(new MarkerOptions().position(campoBom));
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(campoBom, 14));
     }
-
-    /**
-     * Adds markers to the map with clustering support.
-     */
-    private void addClusteredMarkers(GoogleMap googleMap) {
-        // Create the ClusterManager class and set the custom renderer
-        ClusterManager<Place> clusterManager = new ClusterManager<>(this, googleMap);
-        clusterManager.setRenderer(new PlaceRenderer(this, googleMap, clusterManager));
-
-        // Set custom info window adapter
-        clusterManager.getMarkerCollection().setInfoWindowAdapter(new MarkerInfoWindowAdapter(this));
-
-        // Add the places to the ClusterManager
-        clusterManager.addItems(places);
-        clusterManager.cluster();
-
-        // Show polygon
-        clusterManager.setOnClusterItemClickListener(item -> false);
-
-        // When the camera starts moving, change the alpha value of the marker to translucent
-        googleMap.setOnCameraMoveStartedListener((o) -> {
-            for (com.google.android.gms.maps.model.Marker marker : clusterManager.getMarkerCollection().getMarkers()) {
-                marker.setAlpha(0.3f);
-            }
-            for (com.google.android.gms.maps.model.Marker marker : clusterManager.getClusterMarkerCollection().getMarkers()) {
-                marker.setAlpha(0.3f);
-            }
-        });
-
-        googleMap.setOnCameraIdleListener(() -> {
-            // When the camera stops moving, change the alpha value back to opaque
-            for (com.google.android.gms.maps.model.Marker marker : clusterManager.getMarkerCollection().getMarkers()) {
-                marker.setAlpha(1.0f);
-            }
-            for (com.google.android.gms.maps.model.Marker marker : clusterManager.getClusterMarkerCollection().getMarkers()) {
-                marker.setAlpha(1.0f);
-            }
-
-            // Call clusterManager.onCameraIdle() when the camera stops moving so that re-clustering
-            // can be performed when the camera stops moving
-            clusterManager.onCameraIdle();
-        });
-    }
-
-    private BitmapDescriptor bitmapDescriptor;
-
-    private BitmapDescriptor getBitmapDescriptor() {
-        if (bitmapDescriptor == null) {
-            int color = ContextCompat.getColor(this, R.color.VerdeEscuro);
-            bitmapDescriptor = BitmapHelper.vectorToBitmap(this, R.drawable.baseline_account_balance_24, color);
-        }
-        return bitmapDescriptor;
-    }
-
-    /**
-     * Adds markers to the map. These markers won't be clustered.
-     */
-    private void addMarkers(GoogleMap googleMap) {
-        for (Place place : places) {
-            com.google.android.gms.maps.model.Marker marker = googleMap.addMarker(new MarkerOptions()
-                    .title(place.getTitle())
-                    .position(place.getPosition())
-                    .icon(bitmapDescriptor));
-            // Set place as the tag on the marker object so it can be referenced within
-            // MarkerInfoWindowAdapter
-            marker.setTag(place);
-        }
-    }
-
-    public static final String TAG = MainActivity.class.getName();
 }
 

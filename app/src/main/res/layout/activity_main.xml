@@ -10,10 +10,13 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map_fragment"
+        android:id="@+id/googleMap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:mapId="YOUR_MAP_ID" />
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_marginBottom="@dimen/mtrl_bottomappbar_height"
+        android:importantForAccessibility="no"
+        tools:ignore="PrivateResource" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
