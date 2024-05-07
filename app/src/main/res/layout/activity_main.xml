@@ -9,15 +9,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/googleMap"
+
+    <FrameLayout
+        android:id="@+id/app_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_marginBottom="@dimen/mtrl_bottomappbar_height"
-        android:importantForAccessibility="no"
-        tools:ignore="PrivateResource" />
+        tools:ignore="PrivateResource">
 
+    </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
