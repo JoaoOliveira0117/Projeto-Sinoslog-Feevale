@@ -1,21 +1,23 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.ProjetoFeevale" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/Verde</item>
+<resources>
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <!-- Outras customizações do tema -->
     </style>
 
-    <style name="Theme.ProjetoFeevale" parent="Base.Theme.ProjetoFeevale" />
-
-    <style name="Theme.ProjetoFeevale.Fullscreen" parent="Theme.ProjetoFeevale">
-        <item name="android:actionBarStyle">@style/Widget.Theme.ProjetoFeevale.ActionBar.Fullscreen
-        </item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@null</item>
+    <!-- Tema para atividades com barra de ferramentas -->
+    <style name="AppTheme.Toolbar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">false</item>
     </style>
 
-    <style name="ThemeOverlay.ProjetoFeevale.FullscreenContainer" parent="">
-        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
-        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    <!-- Tema para atividades com barra de ferramentas transparente -->
+    <style name="AppTheme.Toolbar.Transparent" parent="AppTheme">
+        <item name="android:windowActionBarOverlay">false</item>
     </style>
+
 </resources>

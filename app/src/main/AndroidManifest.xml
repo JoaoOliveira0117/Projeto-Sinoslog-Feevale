@@ -40,30 +40,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ProjetoFeevale"
         tools:targetApi="31">
         <activity
-            android:name=".activities.Camera"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="@string/title_activity_camera"
-            android:theme="@style/Theme.ProjetoFeevale.Fullscreen" />
-        <activity
-            android:name=".helpers.NumerosDeContato"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="@string/title_activity_numerosde_contato"
-            android:theme="@style/Theme.ProjetoFeevale.Fullscreen" />
-        <activity
-            android:name=".activities.MeusPins"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="@string/title_activity_fullscreen"
-            android:theme="@style/Theme.ProjetoFeevale.Fullscreen" />
-
-        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.example.projetofeevale.activities;
+package com.example.projetofeevale.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,7 +24,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 
 import java.util.concurrent.ExecutionException;
 

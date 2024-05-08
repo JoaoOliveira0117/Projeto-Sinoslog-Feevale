@@ -8,6 +8,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="nav_home">Página Inicial</string>
+    <string name="nav_meuspins">Meus Pins</string>
+    <string name="nav_contatos">Contatos</string>
+    <string name="nav_account">Conta</string>
     <string name="search">Search</string>
     <string name="option_1">Option 1</string>
     <string name="option_2">Option 2</string>
