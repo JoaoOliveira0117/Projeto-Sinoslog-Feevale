@@ -1,4 +1,4 @@
-package com.example.projetofeevale.activities;
+package com.example.projetofeevale.fragments;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.projetofeevale.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeusPinsFragment#newInstance} factory method to
+ * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MeusPinsFragment extends Fragment {
+public class AccountFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class MeusPinsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MeusPinsFragment() {
+    public AccountFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class MeusPinsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MeusPinsFragment.
+     * @return A new instance of fragment AccountFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MeusPinsFragment newInstance(String param1, String param2) {
-        MeusPinsFragment fragment = new MeusPinsFragment();
+    public static AccountFragment newInstance(String param1, String param2) {
+        AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class MeusPinsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meus_pins, container, false);
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
 }

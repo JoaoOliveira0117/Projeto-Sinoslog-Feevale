@@ -1,7 +1,21 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.ProjetoFeevale" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<resources>
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!-- Outras customizações do tema -->
     </style>
+
+    <!-- Tema para atividades com barra de ferramentas -->
+    <style name="AppTheme.Toolbar" parent="AppTheme">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
+    <!-- Tema para atividades com barra de ferramentas transparente -->
+    <style name="AppTheme.Toolbar.Transparent" parent="AppTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
 </resources>

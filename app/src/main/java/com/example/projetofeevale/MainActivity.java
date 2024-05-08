@@ -15,70 +15,49 @@ package com.example.projetofeevale;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.projetofeevale.activities.Camera;
-import com.example.projetofeevale.activities.ContatoFragment;
-import com.example.projetofeevale.activities.MapViewFragment;
-import com.example.projetofeevale.activities.MeusPins;
-import com.example.projetofeevale.activities.MeusPinsFragment;
-import com.example.projetofeevale.helpers.BitmapHelper;
-import com.example.projetofeevale.helpers.MarkerInfoWindowAdapter;
-import com.example.projetofeevale.helpers.NumerosDeContato;
-import com.example.projetofeevale.place.Place;
-import com.example.projetofeevale.place.PlaceRenderer;
-import com.example.projetofeevale.place.PlacesReader;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.maps.android.clustering.ClusterManager;
-
-import java.util.List;
+import com.example.projetofeevale.fragments.AccountFragment;
+import com.example.projetofeevale.fragments.ContatoFragment;
+import com.example.projetofeevale.fragments.MapViewFragment;
+import com.example.projetofeevale.fragments.MeusPinsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private Fragment currentFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         replaceFragment(new MapViewFragment());
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(v -> {
-            replaceFragment(new MapViewFragment());
-        });
-
-        BottomAppBar bottomAppBar = findViewById(R.id.bottom_app_bar);
-        bottomAppBar.setOnMenuItemClickListener(item -> {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.search) {
+
+            if (currentFragment instanceof MapViewFragment && id == R.id.home ||
+                    currentFragment instanceof MeusPinsFragment && id == R.id.meuspins ||
+                    currentFragment instanceof ContatoFragment && id == R.id.contatos ||
+                    currentFragment instanceof AccountFragment && id == R.id.account) {
+                return true;
+            }
+
+            if (id == R.id.home) {
+                replaceFragment(new MapViewFragment());
+                return true;
+            } else if (id == R.id.meuspins) {
                 replaceFragment(new MeusPinsFragment());
                 return true;
-            } else if (id == R.id.phone) {
+            } else if (id == R.id.contatos) {
                 replaceFragment(new ContatoFragment());
                 return true;
-            } else if (id == R.id.option_1) {
-                Toast.makeText(this, "Option 1 Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            } else if (id == R.id.option_2) {
-                Toast.makeText(this, "Option 2 Clicked", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.account) {
+                replaceFragment(new AccountFragment());
                 return true;
             }
             return false;
@@ -89,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.app_layout, fragment);
+        currentFragment = fragment;
         fragmentTransaction.commit();
     }
 }

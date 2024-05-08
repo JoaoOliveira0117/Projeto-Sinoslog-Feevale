@@ -1,11 +1,7 @@
-package com.example.projetofeevale.activities;
+package com.example.projetofeevale.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,19 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.projetofeevale.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MapViewFragment#newInstance} factory method to
+ * Use the {@link MeusPinsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapViewFragment extends Fragment implements OnMapReadyCallback {
+public class MeusPinsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,10 +25,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private GoogleMap googleMap;
-    private SupportMapFragment mapFragment;
 
-    public MapViewFragment() {
+    public MeusPinsFragment() {
         // Required empty public constructor
     }
 
@@ -48,11 +36,11 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MapViewFragment.
+     * @return A new instance of fragment MeusPinsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MapViewFragment newInstance(String param1, String param2) {
-        MapViewFragment fragment = new MapViewFragment();
+    public static MeusPinsFragment newInstance(String param1, String param2) {
+        MeusPinsFragment fragment = new MeusPinsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,20 +60,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        mapFragment = new SupportMapFragment();
-        getParentFragmentManager().beginTransaction().replace(R.id.googleMap, mapFragment).commit();
-        mapFragment.getMapAsync(this);
-
-        return inflater.inflate(R.layout.fragment_map_view, container, false);
-    }
-
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        this.googleMap = googleMap;
-
-        LatLng campoBom = new LatLng(-29.6760811, -51.0907438);
-        this.googleMap.addMarker(new MarkerOptions().position(campoBom));
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(campoBom, 14));
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_meus_pins, container, false);
     }
 }
