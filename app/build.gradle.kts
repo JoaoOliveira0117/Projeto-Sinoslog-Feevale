@@ -14,7 +14,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "MAPS_API_KEY", project.property("MAPS_API_KEY").toString())
+        manifestPlaceholders["MAPS_API_KEY"] = project.properties["MAPS_API_KEY"] as Any
+        println(manifestPlaceholders["MAPS_API_KEY"])
     }
 
     buildTypes {
@@ -25,6 +26,7 @@ android {
                 "proguard-rules.pro"
             )
             isDebuggable = true
+
         }
     }
 
