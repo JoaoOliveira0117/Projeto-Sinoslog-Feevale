@@ -1,13 +1,14 @@
 package com.example.projetofeevale.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetofeevale.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,13 +17,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MapViewFragment#newInstance} factory method to
+ * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapViewFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +36,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     private String mParam2;
     private GoogleMap googleMap;
     private SupportMapFragment mapFragment;
+    private Fragment currentFragment;
 
-    public MapViewFragment() {
+    public MapFragment() {
         // Required empty public constructor
     }
 
@@ -48,8 +51,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
      * @return A new instance of fragment MapViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MapViewFragment newInstance(String param1, String param2) {
-        MapViewFragment fragment = new MapViewFragment();
+    public static MapFragment newInstance(String param1, String param2) {
+        MapFragment fragment = new MapFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,11 +73,21 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_map_view, container, false);
+
         mapFragment = new SupportMapFragment();
         getParentFragmentManager().beginTransaction().replace(R.id.googleMap, mapFragment).commit();
         mapFragment.getMapAsync(this);
 
-        return inflater.inflate(R.layout.fragment_map_view, container, false);
+        FloatingActionButton floatingActionButton = (FloatingActionButton)view.findViewById(R.id.add_pin);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new CreatePinFragment());
+            }
+        });
+
+        return view;
     }
 
     @Override
@@ -84,5 +97,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         LatLng campoBom = new LatLng(-29.6760811, -51.0907438);
         this.googleMap.addMarker(new MarkerOptions().position(campoBom));
         this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(campoBom, 14));
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.home_layout, fragment);
+        currentFragment = fragment;
+        fragmentTransaction.commit();
     }
 }

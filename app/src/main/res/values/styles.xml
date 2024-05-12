@@ -1,2 +1,21 @@
 <resources>
+    <style name="ButtonRoundedEnabled">
+        <item name="android:background">@drawable/button_rounded_enabled</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ButtonRoundedDisabled">
+        <item name="android:background">@drawable/button_rounded_disabled</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ButtonEnabled">
+        <item name="android:background">@drawable/button_square_enabled</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ButtonDisabled">
+        <item name="android:background">@drawable/button_square_disabled</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

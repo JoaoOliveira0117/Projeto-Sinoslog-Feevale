@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipos_de_ocorrencia">
+        <item>Incêndio</item>
+        <item>Enchente</item>
+        <item>Acidente com Desmatamento</item>
+        <item>Acidente com Queimadas</item>
+        <item>Erosão</item>
+        <item>Desabamento</item>
+        <item>Invasão de Áreas de Preservação</item>
+        <item>Vazamento de Produtos Químicos</item>
+    </string-array>
+</resources>
