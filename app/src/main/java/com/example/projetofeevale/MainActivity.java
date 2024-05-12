@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetofeevale.fragments.AccountFragment;
 import com.example.projetofeevale.fragments.ContatoFragment;
-import com.example.projetofeevale.fragments.MapViewFragment;
+import com.example.projetofeevale.fragments.HomeFragment;
 import com.example.projetofeevale.fragments.MeusPinsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        replaceFragment(new MapViewFragment());
+        replaceFragment(new HomeFragment());
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
-            if (currentFragment instanceof MapViewFragment && id == R.id.home ||
+            if (currentFragment instanceof HomeFragment && id == R.id.home ||
                     currentFragment instanceof MeusPinsFragment && id == R.id.meuspins ||
                     currentFragment instanceof ContatoFragment && id == R.id.contatos ||
                     currentFragment instanceof AccountFragment && id == R.id.account) {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (id == R.id.home) {
-                replaceFragment(new MapViewFragment());
+                replaceFragment(new HomeFragment());
                 return true;
             } else if (id == R.id.meuspins) {
                 replaceFragment(new MeusPinsFragment());
