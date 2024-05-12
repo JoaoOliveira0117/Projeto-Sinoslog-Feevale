@@ -75,7 +75,7 @@ public class CreatePinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pin, container, false);
-        replaceFormFragment(new FormCreatePin(currentFormStep));
+        replaceFormFragment(new FormCreatePin(currentFormStep), false, false);
 
         ImageButton imageButton = (ImageButton) view.findViewById(R.id.back_button);
         Button nextButton = (Button) view.findViewById(R.id.form_btn_next);
@@ -93,7 +93,7 @@ public class CreatePinFragment extends Fragment {
 
                 if (currentFormStep < 2) {
                     currentFormStep++;
-                    replaceFormFragment(new FormCreatePin(currentFormStep));
+                    replaceFormFragment(new FormCreatePin(currentFormStep), true, true);
                 } else {
                     Toast.makeText(getActivity(), "Formulário Finalizado!", Toast.LENGTH_SHORT).show();
                 }
@@ -113,7 +113,7 @@ public class CreatePinFragment extends Fragment {
             public void onClick(View v) {
                 if (currentFormStep > 0) {
                     currentFormStep--;
-                    replaceFormFragment(new FormCreatePin(currentFormStep));
+                    replaceFormFragment(new FormCreatePin(currentFormStep), true, false);
                 }
 
                 if (currentFormStep < totalSteps - 1) {
@@ -145,9 +145,28 @@ public class CreatePinFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    private void replaceFormFragment(Fragment fragment) {
+    private void replaceFormFragment(Fragment fragment, boolean animated, boolean to_right) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        if (animated && to_right) {
+            fragmentTransaction.setCustomAnimations(
+                    R.anim.slide_in_from_right,
+                    R.anim.slide_out_to_left,
+                    R.anim.slide_in_from_left,
+                    R.anim.slide_out_to_right
+            );
+        }
+
+        if (animated && !to_right) {
+            fragmentTransaction.setCustomAnimations(
+                    R.anim.slide_in_from_left,
+                    R.anim.slide_out_to_right,
+                    R.anim.slide_in_from_right,
+                    R.anim.slide_out_to_left
+            );
+        }
+
         fragmentTransaction.replace(R.id.fragment_form_steps, fragment);
         currentFragment = fragment;
         fragmentTransaction.commit();
