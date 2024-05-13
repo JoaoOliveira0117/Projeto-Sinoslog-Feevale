@@ -29,6 +29,8 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     private Fragment currentFragment;
+    private Fragment mapFragment;
+    private Fragment createPinFragment;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,9 +66,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        replaceFragment(new MapFragment());
-        System.out.println(getChildFragmentManager());
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mapFragment = new MapFragment(onAddPinListener());
+        createPinFragment = new CreatePinFragment(onBackListener());
+        replaceFragment(mapFragment);
+
+        return view;
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -75,5 +81,23 @@ public class HomeFragment extends Fragment {
         fragmentTransaction.replace(R.id.home_layout, fragment);
         currentFragment = fragment;
         fragmentTransaction.commit();
+    }
+
+    private View.OnClickListener onAddPinListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(createPinFragment);
+            }
+        };
+    }
+
+    private View.OnClickListener onBackListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(mapFragment);
+            }
+        };
     }
 }

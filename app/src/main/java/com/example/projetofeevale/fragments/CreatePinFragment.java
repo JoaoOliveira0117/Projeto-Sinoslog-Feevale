@@ -35,13 +35,16 @@ public class CreatePinFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private View.OnClickListener onBack;
     private Fragment currentFragment;
     private int currentFormStep = 0;
-    private final int totalSteps = 3;
 
     public CreatePinFragment() {
         // Required empty public constructor
+    }
+
+    public CreatePinFragment(View.OnClickListener onBack) {
+        this.onBack = onBack;
     }
 
     /**
@@ -75,74 +78,29 @@ public class CreatePinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pin, container, false);
-        replaceFormFragment(new FormCreatePin(currentFormStep), false, false);
 
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.back_button);
-        Button nextButton = (Button) view.findViewById(R.id.form_btn_next);
-        Button prevButton = (Button) view.findViewById(R.id.form_btn_prev);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(new MapFragment());
-            }
-        });
+        FormCreatePin formCreatePin = new FormCreatePin(currentFormStep);
+        replaceFormFragment(formCreatePin, false, false);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        ImageButton backButton = (ImageButton) view.findViewById(R.id.back_button);
+        backButton.setOnClickListener(onBack);
 
-                if (currentFormStep < 2) {
-                    currentFormStep++;
-                    replaceFormFragment(new FormCreatePin(currentFormStep), true, true);
-                } else {
-                    Toast.makeText(getActivity(), "Formulário Finalizado!", Toast.LENGTH_SHORT).show();
-                }
+        Button formNextButton = (Button) view.findViewById(R.id.form_btn_next);
+        Button formPrevButton = (Button) view.findViewById(R.id.form_btn_prev);
 
-                if (currentFormStep < totalSteps - 1) {
-                    nextButton.setText("Próximo");
-                } else {
-                    nextButton.setText("Finalizar");
-                }
+        formNextButton.setOnClickListener(onFormNavigate(formNextButton, formPrevButton, true));
+        formPrevButton.setOnClickListener(onFormNavigate(formNextButton, formPrevButton, false));
 
-                buttonManager(prevButton, currentFormStep > 0);
-            }
-        });
-
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentFormStep > 0) {
-                    currentFormStep--;
-                    replaceFormFragment(new FormCreatePin(currentFormStep), true, false);
-                }
-
-                if (currentFormStep < totalSteps - 1) {
-                    nextButton.setText("Próximo");
-                } else {
-                    nextButton.setText("Finalizar");
-                }
-
-                buttonManager(prevButton, currentFormStep > 0);
-            }
-        });
-
-        buttonManager(nextButton, currentFormStep < 2);
-        buttonManager(prevButton, currentFormStep > 0);
+        buttonManager(formNextButton, currentFormStep < 2);
+        buttonManager(formPrevButton, currentFormStep > 0);
 
         return view;
     }
 
     private void buttonManager(Button button, boolean enabled) {
+        System.out.println(enabled);
         button.setEnabled(enabled);
         button.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.home_layout, fragment);
-        currentFragment = fragment;
-        fragmentTransaction.commit();
     }
 
     private void replaceFormFragment(Fragment fragment, boolean animated, boolean to_right) {
@@ -170,5 +128,27 @@ public class CreatePinFragment extends Fragment {
         fragmentTransaction.replace(R.id.fragment_form_steps, fragment);
         currentFragment = fragment;
         fragmentTransaction.commit();
+    }
+
+    private View.OnClickListener onFormNavigate(Button nextButton, Button prevButton, boolean next) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean hasPrevSteps = currentFormStep > 0;
+                boolean hasNextSteps = currentFormStep < FormCreatePin.getFormStepsAmount() - 1;
+                boolean canNavigate = next ? hasNextSteps : hasPrevSteps;
+                int multiplier = next ? 1 : -1;
+
+                if (canNavigate) {
+                    currentFormStep = currentFormStep + multiplier;
+                    replaceFormFragment(new FormCreatePin(currentFormStep), true, next);
+                    hasPrevSteps = currentFormStep > 0;
+                    hasNextSteps = currentFormStep < FormCreatePin.getFormStepsAmount() - 1;
+                }
+
+                nextButton.setText(hasNextSteps ? "Avançar" : "Finalizar");
+                buttonManager(prevButton, hasPrevSteps);
+            }
+        };
     }
 }
