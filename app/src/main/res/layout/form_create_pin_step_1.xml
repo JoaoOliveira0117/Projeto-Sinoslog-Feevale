@@ -52,7 +52,7 @@
                 android:layout_marginVertical="20dp"/>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/upload_image_button"
                 android:layout_width="196dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

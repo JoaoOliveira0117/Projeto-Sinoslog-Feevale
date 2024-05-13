@@ -1,30 +1,42 @@
 package com.example.projetofeevale.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.projetofeevale.MainActivity;
 import com.example.projetofeevale.R;
+import com.example.projetofeevale.interfaces.IBaseGPSListener;
+import com.example.projetofeevale.services.LocationService;
+import com.google.android.gms.common.api.GoogleApi;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGPSListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,12 +46,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View.OnClickListener onAddPin;
     private GoogleMap googleMap;
     private SupportMapFragment mapFragment;
-    private Fragment currentFragment;
-
     public MapFragment() {
         // Required empty public constructor
+    }
+
+    public MapFragment(View.OnClickListener onAddPin) {
+        this.onAddPin = onAddPin;
     }
 
     /**
@@ -72,38 +87,66 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mapInitializer();
+        LocationService locationService = ((MainActivity) getActivity()).getLocationService();
+        locationService.setLocation(this);
 
         View view = inflater.inflate(R.layout.fragment_map_view, container, false);
 
-        mapFragment = new SupportMapFragment();
-        getParentFragmentManager().beginTransaction().replace(R.id.googleMap, mapFragment).commit();
-        mapFragment.getMapAsync(this);
-
-        FloatingActionButton floatingActionButton = (FloatingActionButton)view.findViewById(R.id.add_pin);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(new CreatePinFragment());
-            }
-        });
+        FloatingActionButton addPinButton = view.findViewById(R.id.add_pin);
+        addPinButton.setOnClickListener(onAddPin);
 
         return view;
     }
 
+    public void mapInitializer() {
+        mapFragment = new SupportMapFragment();
+        getParentFragmentManager().beginTransaction().replace(R.id.googleMap, mapFragment).commit();
+        mapFragment.getMapAsync(this);
+    }
+
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap = googleMap;
-
-        LatLng campoBom = new LatLng(-29.6760811, -51.0907438);
-        this.googleMap.addMarker(new MarkerOptions().position(campoBom));
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(campoBom, 14));
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.home_layout, fragment);
-        currentFragment = fragment;
-        fragmentTransaction.commit();
+    @Override
+    public void onLocationChanged(Location location) {
+        if (googleMap != null) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+            CircleOptions circleOptions = new CircleOptions();
+            circleOptions.center(latLng);
+            circleOptions.radius(40);
+            circleOptions.strokeColor(Color.BLACK);
+            circleOptions.fillColor(Color.GREEN);
+            circleOptions.strokeWidth(2);
+            circleOptions.zIndex(999);
+
+
+            googleMap.addCircle(circleOptions);
+        }
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onGpsStatusChanged(int event) {
+
     }
 }

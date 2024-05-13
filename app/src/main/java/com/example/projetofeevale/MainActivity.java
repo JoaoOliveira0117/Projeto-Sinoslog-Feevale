@@ -15,10 +15,14 @@ package com.example.projetofeevale;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -26,15 +30,24 @@ import com.example.projetofeevale.fragments.AccountFragment;
 import com.example.projetofeevale.fragments.ContatoFragment;
 import com.example.projetofeevale.fragments.HomeFragment;
 import com.example.projetofeevale.fragments.MeusPinsFragment;
+import com.example.projetofeevale.services.LocationService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     private Fragment currentFragment;
+    private LocationService locationService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         replaceFragment(new HomeFragment());
+
+        locationService = new LocationService(this);
+        locationService.requestPermissions();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_bar);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -70,6 +83,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.app_layout, fragment);
         currentFragment = fragment;
         fragmentTransaction.commit();
+    }
+
+    public LocationService getLocationService() {
+        return locationService;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == LocationService.PERMISSION_LOCATION) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permissão é necessária para o funcionamento da aplicação", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
 
