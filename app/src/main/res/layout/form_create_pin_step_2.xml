@@ -114,49 +114,48 @@
                     android:padding="8dp"
                     android:text="@string/add_pin_info_assignment_field_date"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true"/>>
 
                 <Button
                     android:id="@+id/buttonDateTimePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_pin_info_assignment_field_date_button"
-                    android:background="@drawable/button_square_disabled"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    android:paddingHorizontal="16dp"/>
-            </LinearLayout>
-
-            <!-- Campo Informações Adicionais -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginVertical="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_pin_info_assignment_field_additional_info"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/editTextAdditionalInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Escreva aqui informações adicionais sobre a ocorrência"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    android:padding="12dp"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:gravity="top"
-                    tools:ignore="HardcodedText" />
+                    android:background="@drawable/button_square_disabled"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/add_pin_info_assignment_field_date_button"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
             </LinearLayout>
 
-        </LinearLayout>
-    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/form_step_controller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="12dp"
+
+            android:orientation="horizontal">
+
+
+            <!-- Botão Próximo -->
+            <android.widget.Button
+                android:id="@+id/bttConfirmar2"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:text="Confirmar"
+                style="@style/ButtonEnabled"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+
+
+        </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

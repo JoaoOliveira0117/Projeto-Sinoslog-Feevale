@@ -22,7 +22,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -33,13 +32,11 @@ import com.example.projetofeevale.fragments.MeusPinsFragment;
 import com.example.projetofeevale.services.LocationService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.concurrent.ExecutionException;
-
 public class MainActivity extends AppCompatActivity {
     private Fragment currentFragment;
     private LocationService locationService;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,35 +1,38 @@
 package com.example.projetofeevale.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.example.projetofeevale.MainActivity;
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.interfaces.IBaseGPSListener;
 import com.example.projetofeevale.services.LocationService;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
-import java.util.concurrent.ExecutionException;
+
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +45,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -108,8 +113,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        this.googleMap = googleMap;
+
+        LatLng NH = new LatLng(-29.694519858044448, -51.11572679380734);
+        Marker markerInSydney = googleMap.addMarker(new MarkerOptions().position(NH));
+        // below line is use to add custom marker on our map.
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(NH));
+
+
     }
+
+
+
 
     @Override
     public void onLocationChanged(Location location) {
@@ -148,5 +162,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
     @Override
     public void onGpsStatusChanged(int event) {
 
+    }
+
+    private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
+        // below line is use to generate a drawable.
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+
+        // below line is use to set bounds to our vector drawable.
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+
+        // below line is use to create a bitmap for our
+        // drawable which we have added.
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+
+        // below line is use to add bitmap in our canvas.
+        Canvas canvas = new Canvas(bitmap);
+
+        // below line is use to draw our
+        // vector drawable in canvas.
+        vectorDrawable.draw(canvas);
+
+        // after generating our bitmap we are returning our bitmap.
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }
