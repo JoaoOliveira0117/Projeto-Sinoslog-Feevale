@@ -15,8 +15,8 @@
     <string name="nav_return">Voltar</string>
     <string name="nav_add_pin">Adicionar Ocorrência</string>
     <string name="add_pin_img_upload_title">Selecionar Imagens</string>
-    <string name="add_pin_img_upload_tooltip">Selecione até 4 imagens da ocorrência</string>
-    <string name="add_pin_img_upload_button_label">Selecionar Fotos</string>
+    <string name="add_pin_img_upload_tooltip">Selecione a imagem da ocorrência</string>
+    <string name="add_pin_img_upload_button_label">Selecionar Imagem</string>
     <string name="add_pin_info_assignment_title">Dados da Ocorrência</string>
     <string name="add_pin_info_assignment_tooltip">Campos com * são obrigatórios</string>
     <string name="add_pin_info_assignment_field_address">Endereço*</string>

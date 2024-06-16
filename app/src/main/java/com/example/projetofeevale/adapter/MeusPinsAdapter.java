@@ -1,9 +1,13 @@
 package com.example.projetofeevale.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +28,6 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
     }
 
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,6 +38,7 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pin pin = pinList.get(position);
+        holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(pin.getImagemBytes(), 0, pin.getImagemBytes().length));
         holder.titleTextView.setText(pin.getTitulo());
         holder.typeTextView.setText(pin.getTipo());
         holder.dataTextView.setText(pin.getDataHora());
@@ -60,12 +64,14 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView imageView;
         public TextView titleTextView;
         public TextView typeTextView;
         public TextView dataTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.image_view);
             titleTextView = itemView.findViewById(R.id.title_text_view);
             typeTextView = itemView.findViewById(R.id.type_text_view);
             dataTextView = itemView.findViewById(R.id.data_text_view);

@@ -14,7 +14,6 @@
             android:id="@+id/form_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="256dp"
             android:layout_gravity="center"
             android:text="@string/add_pin_img_upload_title"
             android:textSize="24sp"
@@ -30,13 +29,15 @@
 
             <ImageView
                 android:id="@+id/upload_image"
-                android:layout_width="198dp"
+                android:layout_width="wrap_content"
                 android:layout_height="198dp"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_add_photo"
                 android:padding="48dp"
                 android:background="@drawable/frame_image_view"
-                android:cropToPadding="true"
+                android:outlineProvider="background"
                 />
 
             <TextView
