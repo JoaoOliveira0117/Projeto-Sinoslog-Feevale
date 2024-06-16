@@ -1,12 +1,16 @@
 package com.example.projetofeevale.fragments;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.example.projetofeevale.R;
 
@@ -30,6 +34,15 @@ public class DetailActivity extends AppCompatActivity {
         dataHoraTextView = findViewById(R.id.data_hora_text_view);
         tituloTextView = findViewById(R.id.titulo_text_view);
         descricaoTextView = findViewById(R.id.descricao_text_view);
+
+        ImageButton imageButton = findViewById(R.id.back_button);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

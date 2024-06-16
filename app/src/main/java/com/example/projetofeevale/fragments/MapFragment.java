@@ -13,10 +13,12 @@ import com.example.projetofeevale.MainActivity;
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.interfaces.IBaseGPSListener;
 import com.example.projetofeevale.services.LocationService;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -46,14 +48,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private View.OnClickListener onAddPin;
     private GoogleMap googleMap;
     private SupportMapFragment mapFragment;
+    private LocationService locationService;
+    private final float MAP_ZOOM = 15.5f;
     public MapFragment() {
         // Required empty public constructor
     }
@@ -89,11 +91,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
         }
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mapInitializer();
-        LocationService locationService = ((MainActivity) getActivity()).getLocationService();
+        locationService = ((MainActivity) getActivity()).getLocationService();
         locationService.setLocation(this);
 
         View view = inflater.inflate(R.layout.fragment_map_view, container, false);
@@ -113,34 +116,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-
         LatLng NH = new LatLng(-29.694519858044448, -51.11572679380734);
-        Marker markerInSydney = googleMap.addMarker(new MarkerOptions().position(NH));
-        // below line is use to add custom marker on our map.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(NH));
+        CameraUpdate NHCameraUpdate = CameraUpdateFactory.newLatLngZoom(NH, MAP_ZOOM);
 
+        this.googleMap = googleMap;
+        this.googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        this.googleMap.moveCamera(NHCameraUpdate);
 
+        if (locationService.hasPermissions()) {
+            this.googleMap.setMyLocationEnabled(true);
+        }
     }
-
-
-
 
     @Override
     public void onLocationChanged(Location location) {
         if (googleMap != null) {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-
-            CircleOptions circleOptions = new CircleOptions();
-            circleOptions.center(latLng);
-            circleOptions.radius(40);
-            circleOptions.strokeColor(Color.BLACK);
-            circleOptions.fillColor(Color.GREEN);
-            circleOptions.strokeWidth(2);
-            circleOptions.zIndex(999);
-
-
-            googleMap.addCircle(circleOptions);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM));
         }
     }
 

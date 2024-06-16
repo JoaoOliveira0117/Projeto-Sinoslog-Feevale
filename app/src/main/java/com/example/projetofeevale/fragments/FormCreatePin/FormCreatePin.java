@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -101,6 +102,7 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
 
     // Método para gerenciar o primeiro passo do formulário
     private void handleStepOne(View view) {
+        ImageView imageView = view.findViewById(R.id.upload_image);
         Button button = view.findViewById(R.id.upload_image_button);
         final CharSequence[] items = {"Tirar Foto", "Escolher da biblioteca", "Cancelar"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -140,17 +142,21 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
                             Intent data = result.getData();
                             if (data != null) {
                                 if (data.getExtras() != null && data.getExtras().get("data") != null) {
-                                    // Handling image from camera
+                                    // Imagem da camera
                                     Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                                     imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                    imageView.setImageBitmap(imageBitmap);
+                                    imageView.setPadding(0,0,0,0);
                                     imagemBytes = stream.toByteArray();
                                 } else if (data.getData() != null) {
-                                    // Handling image from gallery
+                                    // Imagem da galeria
                                     try {
                                         Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
                                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                                         imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                        imageView.setImageBitmap(imageBitmap);
+                                        imageView.setPadding(0,0,0,0);
                                         imagemBytes = stream.toByteArray();
                                     } catch (IOException e) {
                                         e.printStackTrace();
