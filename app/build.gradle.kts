@@ -15,7 +15,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["MAPS_API_KEY"] = project.properties["MAPS_API_KEY"] as Any
-        println(manifestPlaceholders["MAPS_API_KEY"])
+        buildConfigField("String", "MAPS_API_KEY", project.properties["MAPS_API_KEY"].toString())
     }
 
     buildTypes {
@@ -109,4 +109,10 @@ dependencies {
 
     // Espresso for UI tests
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Google Places
+    implementation("com.google.android.libraries.places:places:3.5.0")
+
+    // Volley
+    implementation("com.android.volley:volley:1.2.1")
 }
