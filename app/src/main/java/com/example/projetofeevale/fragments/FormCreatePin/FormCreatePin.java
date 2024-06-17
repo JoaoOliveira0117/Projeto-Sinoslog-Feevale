@@ -11,9 +11,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,11 +34,26 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.projetofeevale.BuildConfig;
+import com.example.projetofeevale.MainActivity;
 import com.example.projetofeevale.R;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, DialogInterface.OnCancelListener {
 
@@ -47,11 +66,14 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
     };
     private int currentStep;
     private ActivityResultLauncher activityResultLauncher;
+
+    private PlacesClient placesClient;
     private static final int REQUEST_CAMERA_PERMISSION = 100;
 
     // Variáveis para armazenar dados do formulário
 
     private String address;
+    private LatLng addressLatLng;
     private String type;
     private String dateTime;
     private String title;
@@ -86,7 +108,6 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(steps[currentStep], container, false);
 
         if (currentStep == 0) {
@@ -100,7 +121,6 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
         return view;
     }
 
-    // Método para gerenciar o primeiro passo do formulário
     private void handleStepOne(View view) {
         ImageView imageView = view.findViewById(R.id.upload_image);
         Button button = view.findViewById(R.id.upload_image_button);
@@ -180,23 +200,60 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
 
         Button buttonNext = view.findViewById(R.id.bttConfirmar2);
 
+        Places.initialize(view.getContext(), BuildConfig.MAPS_API_KEY);
+
+        placesClient = Places.createClient(view.getContext());
+
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.editTextAddress);
+
+        final AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+
+        List<String> placeIdSuggestions = new ArrayList<>();
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                        .setSessionToken(token)
+                        .setQuery(s.toString())
+                        .build();
+
+                placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
+                    List<String> suggestions = new ArrayList<>();
+                    placeIdSuggestions.clear();
+                    for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+                        placeIdSuggestions.add(prediction.getPlaceId());
+                        suggestions.add(prediction.getFullText(null).toString());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
+                    autoCompleteTextView.setAdapter(adapter);
+                    autoCompleteTextView.showDropDown();
+                });
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        };
+
+        autoCompleteTextView.addTextChangedListener(textWatcher);
+
+        autoCompleteTextView.setOnItemClickListener((parent, contextView, position, id) -> {
+            findPlaceFromAddress(placeIdSuggestions.get(position));
+            autoCompleteTextView.dismissDropDown();
+        });
+
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Spinner typeField = view.findViewById(R.id.spinnerType);
-                EditText addressField = view.findViewById(R.id.editTextAddress);
+                AutoCompleteTextView addressField = view.findViewById(R.id.editTextAddress);
 
-                // Verificar se os campos obrigatórios foram preenchidos
                 if (typeField.getSelectedItemPosition() != 0 && !addressField.getText().toString().isEmpty()) {
-                    // Se os campos estiverem preenchidos, vá para o próximo passo
                     type = typeField.getSelectedItem().toString();
-                    address = addressField.getText().toString();
-                    // Avançar para o próximo passo
-                    // Você pode implementar a lógica aqui para avançar para o próximo passo
                 } else {
-                    // Se os campos não estiverem preenchidos, exiba uma mensagem de erro ou faça algo apropriado
-                    // Exemplo: Mostrar uma mensagem de erro
                     Toast.makeText(getActivity(), "Por favor, preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -214,23 +271,33 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
                 EditText titleField = view.findViewById(R.id.editTextName);
                 EditText descriptionField = view.findViewById(R.id.editTextAdditionalInfo);
 
-                // Verificar se os campos obrigatórios foram preenchidos
                 if (!titleField.getText().toString().isEmpty() && !descriptionField.getText().toString().isEmpty()) {
-                    // Se os campos estiverem preenchidos, vá para o próximo passo
                     title = titleField.getText().toString();
                     description = descriptionField.getText().toString();
-                    // Avançar para o próximo passo
-                    // Você pode implementar a lógica aqui para avançar para o próximo passo
                 } else {
-                    // Se os campos não estiverem preenchidos, exiba uma mensagem de erro ou faça algo apropriado
-                    // Exemplo: Mostrar uma mensagem de erro
                     Toast.makeText(getActivity(), "Por favor, preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show();
                 }
             }
-
         });
     }
 
+    private void findPlaceFromAddress(String address) {
+        List<Place.Field> placeFields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS);
+        FetchPlaceRequest request = FetchPlaceRequest.newInstance(address, placeFields);
+
+        placesClient.fetchPlace(request).addOnCompleteListener((response) -> {
+            if (response.isSuccessful()) {
+                FetchPlaceResponse fetchPlaceResponse = response.getResult();
+                Place place = fetchPlaceResponse.getPlace();
+                this.address = place.getAddress();
+                this.addressLatLng = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                System.out.println(this.address);
+                System.out.println(this.addressLatLng);
+            } else {
+                Toast.makeText(getActivity(), "Não foi possível selecionar o endereço", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     public static int getFormStepsAmount() {
         return steps.length;
