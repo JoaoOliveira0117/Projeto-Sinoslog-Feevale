@@ -49,6 +49,8 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
                 intent.putExtra("id", pin.getId());
                 intent.putExtra("imagem", pin.getImagemBytes()); // Send image bytes to detail activity
                 intent.putExtra("endereco", pin.getEndereco());
+                intent.putExtra("latitude", pin.getLatitude());
+                intent.putExtra("longitude", pin.getLongitude());
                 intent.putExtra("tipo", pin.getTipo());
                 intent.putExtra("dataHora", pin.getDataHora());
                 intent.putExtra("titulo", pin.getTitulo());

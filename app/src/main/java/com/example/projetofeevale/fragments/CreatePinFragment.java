@@ -21,6 +21,8 @@ public class CreatePinFragment extends Fragment {
 
     private byte[] imagemBytes;
     private String address;
+    private String latitude;
+    private String longitude;
     private String type;
     private String dateTime;
     private String title;
@@ -150,6 +152,8 @@ public class CreatePinFragment extends Fragment {
 
         } else if (currentFormStep == 1) {
             address = fragment.getAddress();
+            latitude = fragment.getLatitude();
+            longitude = fragment.getLongitude();
             type = fragment.getType();
             dateTime = fragment.getDateTime();
         } else if (currentFormStep == 2) {
@@ -166,6 +170,8 @@ public class CreatePinFragment extends Fragment {
         ContentValues values = new ContentValues();
         values.put("imagem", imagemBytes);
         values.put("endereco", address);
+        values.put("latitude", latitude);
+        values.put("longitude", longitude);
         values.put("tipo", type);
         values.put("dataHora", dateTime);
         values.put("titulo", title);
@@ -173,9 +179,23 @@ public class CreatePinFragment extends Fragment {
 
         long newRowId = db.insert("Pins", null, values);
         if (newRowId != -1) {
-            Snackbar.make(view, "Dados inseridos com sucesso!", Snackbar.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(view, "Dados inseridos com sucesso!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("Fechar", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    snackbar.dismiss();
+                }
+            });
+            snackbar.show();
         } else {
-            Snackbar.make(view, "Erro ao inserir dados.", Snackbar.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(view, "Erro ao inserir dados.", Snackbar.LENGTH_LONG);
+            snackbar.setAction("Fechar", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    snackbar.dismiss();
+                }
+            });
+            snackbar.show();
         }
     }
 }
