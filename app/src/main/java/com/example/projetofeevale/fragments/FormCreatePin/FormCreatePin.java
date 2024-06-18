@@ -73,7 +73,8 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
     // Variáveis para armazenar dados do formulário
 
     private String address;
-    private LatLng addressLatLng;
+    private String latitude;
+    private String longitude;
     private String type;
     private String dateTime;
     private String title;
@@ -290,9 +291,9 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
                 FetchPlaceResponse fetchPlaceResponse = response.getResult();
                 Place place = fetchPlaceResponse.getPlace();
                 this.address = place.getAddress();
-                this.addressLatLng = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                this.latitude = String.valueOf(place.getLatLng().latitude);
+                this.longitude = String.valueOf(place.getLatLng().longitude);
                 System.out.println(this.address);
-                System.out.println(this.addressLatLng);
             } else {
                 Toast.makeText(getActivity(), "Não foi possível selecionar o endereço", Toast.LENGTH_SHORT).show();
             }
@@ -357,6 +358,9 @@ public class FormCreatePin extends Fragment implements DatePickerDialog.OnDateSe
     public String getAddress() {
         return address;
     }
+
+    public String getLatitude() { return latitude; }
+    public String getLongitude() { return longitude; }
 
     public String getType() {
         return type;

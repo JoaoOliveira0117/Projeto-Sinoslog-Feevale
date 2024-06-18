@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.example.projetofeevale.MainActivity;
 import com.example.projetofeevale.R;
+import com.example.projetofeevale.fragments.FormCreatePin.Pin;
 import com.example.projetofeevale.interfaces.IBaseGPSListener;
 import com.example.projetofeevale.services.LocationService;
 import com.google.android.gms.maps.CameraUpdate;
@@ -33,7 +34,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-
+import java.util.List;
 
 
 /**
@@ -96,6 +97,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mapInitializer();
+
         locationService = ((MainActivity) getActivity()).getLocationService();
         locationService.setLocation(this);
 
@@ -122,6 +124,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGP
         this.googleMap = googleMap;
         this.googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         this.googleMap.moveCamera(NHCameraUpdate);
+
+        DbHelper dbHelper = new DbHelper(getActivity());
+        List<Pin> pins = dbHelper.getData();
+
+        for (Pin pin : pins) {
+            LatLng location = new LatLng(Double.parseDouble(pin.getLatitude()), Double.parseDouble(pin.getLongitude()));
+            MarkerOptions marker = new MarkerOptions().position(location).title(pin.getTitulo()).snippet(pin.getDescricao());
+            this.googleMap.addMarker(marker);
+        }
 
         if (locationService.hasPermissions()) {
             this.googleMap.setMyLocationEnabled(true);
