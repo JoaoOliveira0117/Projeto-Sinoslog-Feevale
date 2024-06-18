@@ -1,12 +1,16 @@
 package com.example.projetofeevale.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.projetofeevale.R;
 
@@ -17,12 +21,12 @@ import com.example.projetofeevale.R;
  */
 public class ContatoFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+    // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    // Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -36,9 +40,8 @@ public class ContatoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment contato.
+     * @return A new instance of fragment ContatoFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ContatoFragment newInstance(String param1, String param2) {
         ContatoFragment fragment = new ContatoFragment();
         Bundle args = new Bundle();
@@ -61,6 +64,57 @@ public class ContatoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contato, container, false);
+        View view = inflater.inflate(R.layout.fragment_contato, container, false);
+
+        // Lista de contatos fixa
+        final String[] contacts = {"Bombeiros", "Brigada Militar", "Disque Denúncia", "Disque Saúde",
+                "Canil Municipal", "COMUSA", "Defesa Civil", "Guarda Municipal", "RGE Sul"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, contacts);
+        ListView listView = view.findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String contactName = contacts[position];
+                String contactNumber = getContactNumber(contactName); // Obtenha o número de contato correspondente ao nome do contato
+                if (contactNumber != null) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + contactNumber));
+                    startActivity(intent);
+                }
+            }
+        });
+
+        return view;
     }
+
+    // Método para obter o número de contato correspondente ao nome do contato
+    private String getContactNumber(String contactName) {
+        // Aqui você pode implementar lógica para mapear o nome do contato para o número de contato desejado
+        // Por simplicidade, este exemplo apenas retorna um número fixo para cada contato
+        switch (contactName) {
+            case "Bombeiros":
+                return "35951123";
+            case "Brigada Militar":
+                return "190";
+            case "Canil Municipal":
+                return "996832117";
+            case "COMUSA":
+                return "08006000115";
+            case "Defesa Civil":
+                return "30979408";
+            case "Disque Denúncia":
+                return "32885100";
+            case "Disque Saúde":
+                return "0800611997";
+            case "Guarda Municipal":
+                return "35248737";
+            case "RGE Sul":
+                return "08007077272";
+            default:
+                return null;
+ }
+}
 }
