@@ -54,10 +54,10 @@ public class DetailActivity extends AppCompatActivity {
             byte[] imagemBytes = extras.getByteArray("imagem");
 
             // Converter bytes da imagem em um Bitmap
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.length);
+            //Bitmap bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.length);
 
             // Definir o Bitmap no ImageView
-            imageView.setImageBitmap(bitmap);
+            //imageView.setImageBitmap(bitmap);
 
             enderecoTextView.setText(endereco);
             tipoTextView.setText(tipo);

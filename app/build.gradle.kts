@@ -98,9 +98,6 @@ dependencies {
     // JUnit for unit tests
     testImplementation("junit:junit:4.13.2")
 
-    // Gson for JSON parsing
-    implementation("com.google.code.gson:gson:2.10")
-
     // Android Maps Utils
     implementation("com.google.maps.android:android-maps-utils:3.8.2")
 
@@ -115,4 +112,17 @@ dependencies {
 
     // Volley
     implementation("com.android.volley:volley:1.2.1")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    // Retrofit's Gson
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+    // Gson for JSON parsing
+    implementation("com.google.code.gson:gson:2.10")
 }

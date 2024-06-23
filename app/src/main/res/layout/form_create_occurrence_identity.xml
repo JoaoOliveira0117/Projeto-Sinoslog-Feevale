@@ -42,6 +42,18 @@
                 android:fontFamily="sans-serif-condensed-light"
                 android:layout_marginVertical="20dp"/>
 
+            <TextView
+                android:id="@+id/form_upload_tooltip_required"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="256dp"
+                android:layout_gravity="center"
+                android:text="@string/add_pin_identification_tooltip_required"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-condensed-light"
+                android:layout_marginVertical="20dp"/>
+
             <!-- Campo Nome -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,6 +62,7 @@
                 android:layout_marginVertical="4dp">
 
                 <TextView
+                    android:id="@+id/editTextNameLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_pin_identification_field_name"
@@ -78,6 +91,7 @@
                 android:layout_marginVertical="4dp">
 
                 <TextView
+                    android:id="@+id/editTextAdditionalInfoLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_pin_identification_field_description"
@@ -98,35 +112,7 @@
                     android:gravity="top"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/form_step_controller"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginVertical="12dp"
-
-                android:orientation="horizontal">
-
-
-                <!-- Botão Próximo -->
-                <android.widget.Button
-                    android:id="@+id/bttConfirmar3"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
-                    android:layout_weight="1"
-                    android:padding="4dp"
-                    android:text="Confirmar"
-                    style="@style/ButtonEnabled"
-                    android:textSize="14sp"
-                    tools:ignore="HardcodedText" />
-
-
-            </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

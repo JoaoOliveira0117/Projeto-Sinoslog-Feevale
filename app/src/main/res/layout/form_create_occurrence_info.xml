@@ -49,6 +49,7 @@
                 android:layout_marginVertical="4dp">
 
                 <TextView
+                    android:id="@+id/occurrenceAddressLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_pin_info_assignment_field_address"
@@ -57,7 +58,7 @@
                     android:padding="8dp"/>
 
                 <AutoCompleteTextView
-                    android:id="@+id/editTextAddress"
+                    android:id="@+id/occurrenceAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Digite o endereço"
@@ -77,6 +78,7 @@
                 android:layout_marginVertical="4dp">
 
                 <TextView
+                    android:id="@+id/occurrenceTypeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_pin_info_assignment_field_type"
@@ -85,7 +87,7 @@
                     android:padding="8dp"/>
 
                 <Spinner
-                    android:id="@+id/spinnerType"
+                    android:id="@+id/occurrenceType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
@@ -96,7 +98,6 @@
                     />
             </LinearLayout>
 
-            <!-- Campo Data e Hora de Início -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,57 +106,27 @@
                 android:layout_marginVertical="4dp">
 
                 <TextView
-                    android:id="@+id/textDateTime"
+                    android:id="@+id/occurrenceDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:text="@string/add_pin_info_assignment_field_date"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:padding="8dp"/>
+
+                <EditText
+                    android:id="@+id/occurrenceDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     android:padding="8dp"
-                    android:text="@string/add_pin_info_assignment_field_date"
+                    android:hint="@string/add_pin_info_assignment_field_date_hint"
+                    android:inputType="none"
+                    android:focusable="false"
                     android:clickable="true"
-                    android:focusable="true"/>>
-
-                <Button
-                    android:id="@+id/buttonDateTimePicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_square_disabled"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/add_pin_info_assignment_field_date_button"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
+                    tools:ignore="TextFields" />
             </LinearLayout>
-
-
-            </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/form_step_controller"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginVertical="12dp"
-
-            android:orientation="horizontal">
-
-
-            <!-- Botão Próximo -->
-            <android.widget.Button
-                android:id="@+id/bttConfirmar2"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:padding="4dp"
-                android:text="Confirmar"
-                style="@style/ButtonEnabled"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
-
-
         </LinearLayout>
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
