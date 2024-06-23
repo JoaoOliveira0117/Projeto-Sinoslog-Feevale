@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofeevale.R;
+import com.example.projetofeevale.data.model.response.OccurrenceResponse;
 import com.example.projetofeevale.fragments.DetailActivity;
 import com.example.projetofeevale.fragments.FormCreatePin.Pin;
 
@@ -21,10 +22,10 @@ import java.util.List;
 
 public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHolder> {
 
-    private final List<Pin> pinList;
+    private final List<OccurrenceResponse> occurrences;
 
-    public MeusPinsAdapter(List<Pin> pinList) {
-        this.pinList = pinList;
+    public MeusPinsAdapter(List<OccurrenceResponse> occurrences) {
+        this.occurrences = occurrences;
     }
 
 
@@ -37,24 +38,24 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Pin pin = pinList.get(position);
-        holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(pin.getImagemBytes(), 0, pin.getImagemBytes().length));
-        holder.titleTextView.setText(pin.getTitulo());
-        holder.typeTextView.setText(pin.getTipo());
-        holder.dataTextView.setText(pin.getDataHora());
+        OccurrenceResponse occurrence = occurrences.get(position);
+        //holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(pin.getImagemBytes(), 0, pin.getImagemBytes().length));
+        holder.titleTextView.setText(occurrence.getTitle());
+        holder.typeTextView.setText(occurrence.getType());
+        holder.dataTextView.setText(occurrence.getDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                intent.putExtra("id", pin.getId());
-                intent.putExtra("imagem", pin.getImagemBytes()); // Send image bytes to detail activity
-                intent.putExtra("endereco", pin.getEndereco());
-                intent.putExtra("latitude", pin.getLatitude());
-                intent.putExtra("longitude", pin.getLongitude());
-                intent.putExtra("tipo", pin.getTipo());
-                intent.putExtra("dataHora", pin.getDataHora());
-                intent.putExtra("titulo", pin.getTitulo());
-                intent.putExtra("descricao", pin.getDescricao());
+                intent.putExtra("id", occurrence.get_id());
+                //intent.putExtra("imagem", occurrence.getImagemBytes()); // Send image bytes to detail activity
+                intent.putExtra("endereco", occurrence.getAddress());
+                intent.putExtra("latitude", occurrence.getLatitude());
+                intent.putExtra("longitude", occurrence.getLongitude());
+                intent.putExtra("tipo", occurrence.getType());
+                intent.putExtra("dataHora", occurrence.getDate());
+                intent.putExtra("titulo", occurrence.getTitle());
+                intent.putExtra("descricao", occurrence.getDescription());
                 v.getContext().startActivity(intent);
             }
         });
@@ -62,7 +63,7 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return pinList.size();
+        return occurrences.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

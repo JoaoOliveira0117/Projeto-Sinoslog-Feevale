@@ -12,25 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.adapter.MeusPinsAdapter;
-import com.example.projetofeevale.fragments.FormCreatePin.Pin;
+import com.example.projetofeevale.data.model.response.OccurrenceResponse;
+import com.example.projetofeevale.data.remote.api.ApiCallback;
+import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
 
 import java.util.List;
 
 public class MeusPinsFragment extends Fragment {
-
     private RecyclerView recyclerView;
     private MeusPinsAdapter adapter;
-    private List<Pin> pinList;
 
     public MeusPinsFragment() {
-        // Required empty public constructor
-    }
-
-    public static MeusPinsFragment newInstance(String param1, String param2) {
-        MeusPinsFragment fragment = new MeusPinsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -46,10 +38,18 @@ public class MeusPinsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        DbHelper dbHelper = new DbHelper(getActivity());
-        pinList = dbHelper.getData();
-        adapter = new MeusPinsAdapter(pinList);
-        recyclerView.setAdapter(adapter);
+        new OccurrenceRepository().getAllOccurrences(new ApiCallback<List<OccurrenceResponse>>() {
+            @Override
+            public void onSuccess(List<OccurrenceResponse> data) {
+                adapter = new MeusPinsAdapter(data);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(String message, String cause, Throwable t) {
+
+            }
+        });
 
         return view;
     }
