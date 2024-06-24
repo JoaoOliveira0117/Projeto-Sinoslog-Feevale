@@ -1,34 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <!-- Título explicativo -->
 
-    <TextView
-        android:id="@+id/textViewTitle"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Contatos de Emergência e Serviços Públicos"
-        android:textSize="16sp"
-
-
-
-        android:textStyle="bold"
-        android:padding="16dp"
         android:background="@color/colorPrimary"
-        android:textColor="@android:color/black"/>
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:contentInsetStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/textCriar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Contatos de Emergência e Serviços Públicos"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <!-- Linha divisória abaixo do título -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#0A2463"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+
+        />
 
     <!-- ListView para exibir a lista de contatos -->
     <ListView
+
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="@color/white"
+        android:divider="#0A2463"
+        android:textSize="16sp"
+        android:textColor="@color/black"
         android:dividerHeight="1dp"
+        android:paddingHorizontal="20dp"
         android:background="@android:color/white" />
 
 </LinearLayout>

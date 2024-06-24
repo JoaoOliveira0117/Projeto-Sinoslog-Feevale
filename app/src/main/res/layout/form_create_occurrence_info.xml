@@ -8,6 +8,7 @@
         android:id="@+id/scroll_view_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="24dp"
         android:orientation="vertical">
@@ -61,12 +62,12 @@
                     android:id="@+id/occurrenceAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:hint="Digite o endereço"
                     android:inputType="text"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
                     android:padding="12dp"
-                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -90,7 +91,7 @@
                     android:id="@+id/occurrenceType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:padding="12dp"
                     android:layout_marginBottom="16dp"
@@ -118,7 +119,7 @@
                     android:id="@+id/occurrenceDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:padding="8dp"
                     android:hint="@string/add_pin_info_assignment_field_date_hint"
