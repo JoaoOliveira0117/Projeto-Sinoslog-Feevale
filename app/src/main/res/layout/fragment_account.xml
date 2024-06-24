@@ -1,18 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <TextView
-        android:id="@+id/txt_contato"
-        android:layout_width="wrap_content"
+    <!-- Container horizontal para imagem e texto ao lado -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Conta"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Conta" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/account_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:padding="1dp"
+            android:background="@drawable/frame_image_view"
+            android:outlineProvider="background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_account" />
+
+        <TextView
+            android:id="@+id/txt_Dados"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:text="      Nome Completo"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="center"
+            android:fontFamily="sans-serif-condensed-medium" />
+    </LinearLayout>
+
+    <!-- Linha divisória -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="70dp"
+        android:background="#0A2463" />
+
+    <!-- Outros TextViews com ícones e linhas divisórias -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icon_contato"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_dados_conta" />
+
+        <TextView
+            android:id="@+id/txt_contato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="Dados da Conta" />
+    </LinearLayout>
+
+
+    <!-- Linha divisória -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#0A2463" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icon_conta"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_privacidade" />
+
+        <TextView
+            android:id="@+id/txt_conta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="Privacidade e Segurança" />
+    </LinearLayout>
+
+    <!-- Linha divisória -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#0A2463"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icon_conta2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_alerta" />
+
+        <TextView
+            android:id="@+id/txt_contata2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+
+            android:text="Notificações e Alertas" />
+    </LinearLayout>
+
+    <!-- Linha divisória -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#0A2463" />
+
+    <!-- Contêiner horizontal para configuração e ajuda, fixado na parte inferior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/icon_config"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+
+                android:src="@drawable/ic_config"/>
+
+            <TextView
+                android:id="@+id/txt_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+
+                android:text="Configurações" />
+        </LinearLayout>
+
+        <!-- Linha divisória -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#0A2463"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/icon_ajuda"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_ajuda" />
+
+            <TextView
+                android:id="@+id/txt_Ajuda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Ajuda" />
+        </LinearLayout>
+
+        <!-- Linha divisória -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#0A2463" />
+    </LinearLayout>
+
+</LinearLayout>
