@@ -1,4 +1,4 @@
-package com.example.projetofeevale.fragments;
+package com.example.projetofeevale.ui.meusPins;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofeevale.R;
-import com.example.projetofeevale.adapter.MeusPinsAdapter;
+import com.example.projetofeevale.ui.meusPins.adapter.PinAdapter;
 import com.example.projetofeevale.data.model.response.OccurrenceResponse;
 import com.example.projetofeevale.data.remote.api.ApiCallback;
 import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
 
 import java.util.List;
 
-public class MeusPinsFragment extends Fragment {
+public class MeusPins extends Fragment {
     private RecyclerView recyclerView;
-    private MeusPinsAdapter adapter;
+    private PinAdapter adapter;
 
-    public MeusPinsFragment() {
+    public MeusPins() {
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MeusPinsFragment extends Fragment {
         new OccurrenceRepository().getAllOccurrences(new ApiCallback<List<OccurrenceResponse>>() {
             @Override
             public void onSuccess(List<OccurrenceResponse> data) {
-                adapter = new MeusPinsAdapter(data);
+                adapter = new PinAdapter(data);
                 recyclerView.setAdapter(adapter);
             }
 

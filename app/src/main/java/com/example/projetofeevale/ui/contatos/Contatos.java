@@ -1,4 +1,4 @@
-package com.example.projetofeevale.fragments;
+package com.example.projetofeevale.ui.contatos;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,10 +16,10 @@ import com.example.projetofeevale.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ContatoFragment#newInstance} factory method to
+ * Use the {@link Contatos#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ContatoFragment extends Fragment {
+public class Contatos extends Fragment {
 
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +30,7 @@ public class ContatoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ContatoFragment() {
+    public Contatos() {
         // Required empty public constructor
     }
 
@@ -42,8 +42,8 @@ public class ContatoFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ContatoFragment.
      */
-    public static ContatoFragment newInstance(String param1, String param2) {
-        ContatoFragment fragment = new ContatoFragment();
+    public static Contatos newInstance(String param1, String param2) {
+        Contatos fragment = new Contatos();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

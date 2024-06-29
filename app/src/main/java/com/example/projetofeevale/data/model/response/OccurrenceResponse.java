@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class OccurrenceResponse extends OccurrenceSchema {
     private String _id;
+    private String imageUrl;
     private String createdAt;
     private String updatedAt;
 
@@ -19,5 +20,9 @@ public class OccurrenceResponse extends OccurrenceSchema {
 
     public String getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

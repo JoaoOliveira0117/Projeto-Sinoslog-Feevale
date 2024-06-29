@@ -1,4 +1,4 @@
-package com.example.projetofeevale.fragments;
+package com.example.projetofeevale.ui.conta;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.projetofeevale.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AccountFragment#newInstance} factory method to
+ * Use the {@link Conta#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountFragment extends Fragment {
+public class Conta extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class AccountFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AccountFragment() {
+    public Conta() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class AccountFragment extends Fragment {
      * @return A new instance of fragment AccountFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AccountFragment newInstance(String param1, String param2) {
-        AccountFragment fragment = new AccountFragment();
+    public static Conta newInstance(String param1, String param2) {
+        Conta fragment = new Conta();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

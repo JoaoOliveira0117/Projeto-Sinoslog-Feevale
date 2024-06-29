@@ -1,5 +1,6 @@
 package com.example.projetofeevale.data.model.schema;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 public class OccurrenceSchema {
@@ -10,6 +11,7 @@ public class OccurrenceSchema {
     private double longitude;
     private String date;
     private String description;
+    private ByteArrayOutputStream occurrenceImage;
 
     public String getTitle() {
         return title;
@@ -65,5 +67,13 @@ public class OccurrenceSchema {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ByteArrayOutputStream getOccurrenceImage() {
+        return occurrenceImage;
+    }
+
+    public void setOccurrenceImage(ByteArrayOutputStream occurrenceImage) {
+        this.occurrenceImage = occurrenceImage;
     }
 }

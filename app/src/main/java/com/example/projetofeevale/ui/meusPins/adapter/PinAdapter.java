@@ -1,12 +1,10 @@
-package com.example.projetofeevale.adapter;
+package com.example.projetofeevale.ui.meusPins.adapter;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,16 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.data.model.response.OccurrenceResponse;
-import com.example.projetofeevale.fragments.DetailActivity;
-import com.example.projetofeevale.fragments.FormCreatePin.Pin;
+import com.example.projetofeevale.data.remote.api.ApiCallback;
+import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
+import com.example.projetofeevale.activities.DetailActivity;
 
 import java.util.List;
 
-public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHolder> {
+public class PinAdapter extends RecyclerView.Adapter<PinAdapter.ViewHolder> {
 
     private final List<OccurrenceResponse> occurrences;
 
-    public MeusPinsAdapter(List<OccurrenceResponse> occurrences) {
+    public PinAdapter(List<OccurrenceResponse> occurrences) {
         this.occurrences = occurrences;
     }
 
@@ -39,7 +38,21 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OccurrenceResponse occurrence = occurrences.get(position);
-        //holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(pin.getImagemBytes(), 0, pin.getImagemBytes().length));
+
+        if (occurrence.getImageUrl() != null) {
+            new OccurrenceRepository().getOccurrenceImage(occurrence.get_id(), new ApiCallback<Bitmap>() {
+
+                @Override
+                public void onSuccess(Bitmap data) {
+                    holder.imageView.setImageBitmap(data);
+                }
+
+                @Override
+                public void onFailure(String message, String cause, Throwable t) {
+
+                }
+            } );
+        }
         holder.titleTextView.setText(occurrence.getTitle());
         holder.typeTextView.setText(occurrence.getType());
         holder.dataTextView.setText(occurrence.getDate());
@@ -47,8 +60,8 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailActivity.class);
+
                 intent.putExtra("id", occurrence.get_id());
-                //intent.putExtra("imagem", occurrence.getImagemBytes()); // Send image bytes to detail activity
                 intent.putExtra("endereco", occurrence.getAddress());
                 intent.putExtra("latitude", occurrence.getLatitude());
                 intent.putExtra("longitude", occurrence.getLongitude());
@@ -56,6 +69,7 @@ public class MeusPinsAdapter extends RecyclerView.Adapter<MeusPinsAdapter.ViewHo
                 intent.putExtra("dataHora", occurrence.getDate());
                 intent.putExtra("titulo", occurrence.getTitle());
                 intent.putExtra("descricao", occurrence.getDescription());
+
                 v.getContext().startActivity(intent);
             }
         });

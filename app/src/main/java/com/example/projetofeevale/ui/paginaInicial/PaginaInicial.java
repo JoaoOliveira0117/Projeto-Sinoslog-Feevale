@@ -1,4 +1,4 @@
-package com.example.projetofeevale.fragments;
+package com.example.projetofeevale.ui.paginaInicial;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,12 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.projetofeevale.R;
-import com.example.projetofeevale.ui.createOccurrence.fragment.CreateOccurrence;
+import com.example.projetofeevale.ui.paginaInicial.fragment.MapView;
+import com.example.projetofeevale.ui.createOccurrence.CreateOccurrence;
 
-public class HomeFragment extends Fragment {
+public class PaginaInicial extends Fragment {
     private Fragment mapFragment;
 
-    public HomeFragment() {
+    public PaginaInicial() {
     }
 
     @Override
@@ -30,7 +31,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mapFragment = new MapFragment(onAddPinListener());
+        mapFragment = new MapView(onAddPinListener());
         replaceFragment(mapFragment);
 
         return view;

@@ -1,77 +1,38 @@
-package com.example.projetofeevale.ui.createOccurrence.fragment;
+package com.example.projetofeevale.ui.createOccurrence;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.projetofeevale.BuildConfig;
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.data.model.request.OccurrenceRequest;
 import com.example.projetofeevale.data.model.response.OccurrenceResponse;
 import com.example.projetofeevale.data.remote.api.ApiCallback;
 import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
-import com.example.projetofeevale.fragments.HomeFragment;
-import com.example.projetofeevale.ui.createOccurrence.fragment.OccurrenceFragment;
+import com.example.projetofeevale.ui.createOccurrence.fragment.BaseOccurrence;
 import com.example.projetofeevale.ui.createOccurrence.fragment.OccurrenceIdentity;
 import com.example.projetofeevale.ui.createOccurrence.fragment.OccurrenceImageUpload;
 import com.example.projetofeevale.ui.createOccurrence.fragment.OccurrenceInfo;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.AutocompletePrediction;
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.FetchPlaceRequest;
-import com.google.android.libraries.places.api.net.FetchPlaceResponse;
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
-import com.google.android.libraries.places.api.net.PlacesClient;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class CreateOccurrence extends Fragment {
     private OccurrenceRequest occurrenceRequest;
-    private FragmentContainerView fragmentContainerView;
     private int currentIndex = 0;
-    private OccurrenceFragment currentFragment;
-    private List<OccurrenceFragment> fragmentList = new ArrayList<>();
+    private BaseOccurrence currentFragment;
+    private final List<BaseOccurrence> fragmentList = new ArrayList<>();
     private Button prevButton;
     private Button nextButton;
 
@@ -98,8 +59,6 @@ public class CreateOccurrence extends Fragment {
 
         setupPrevButton();
         setupNextButton();
-
-        fragmentContainerView = view.findViewById(R.id.fragment_form_steps);
 
         occurrenceRequest = new OccurrenceRequest();
 
@@ -172,7 +131,11 @@ public class CreateOccurrence extends Fragment {
     }
 
     private void postOccurrence() {
-        for (OccurrenceFragment fragment : fragmentList) {
+        if(currentFragment.hasEmptyFields()) {
+            return;
+        }
+
+        for (BaseOccurrence fragment : fragmentList) {
             fragment.fillForm();
         }
 
@@ -192,7 +155,7 @@ public class CreateOccurrence extends Fragment {
         });
     }
 
-    private void replaceFormFragment(OccurrenceFragment fragment, boolean animated, boolean toRight) {
+    private void replaceFormFragment(BaseOccurrence fragment, boolean animated, boolean toRight) {
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -25,7 +27,9 @@ import android.widget.ImageView;
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.data.model.request.OccurrenceRequest;
 
-public class OccurrenceImageUpload extends OccurrenceFragment {
+import java.io.ByteArrayOutputStream;
+
+public class OccurrenceImageUpload extends BaseOccurrence {
     private static final int REQUEST_CAMERA_PERMISSION = 100;
     private static final int REQUEST_LIBRARY_PERMISSION = 100;
     private OccurrenceRequest occurrenceRequest;
@@ -95,13 +99,12 @@ public class OccurrenceImageUpload extends OccurrenceFragment {
                         }
 
                         if (data.getData() != null) {
-                            // Imagem da biblioteca
-                            return;
+                            imageView.setImageURI(data.getData());
                         }
 
                         if (data.getExtras() != null && data.getExtras().get("data") != null) {
-                            // Imagem da camera
-                            return;
+                            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                            imageView.setImageBitmap(imageBitmap);
                         }
                     }
                 }
@@ -130,5 +133,15 @@ public class OccurrenceImageUpload extends OccurrenceFragment {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void fillForm() {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
+
+        occurrenceRequest.setOccurrenceImage(byteArrayOutputStream);
     }
 }

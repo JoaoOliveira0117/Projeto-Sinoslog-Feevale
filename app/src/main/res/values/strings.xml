@@ -21,7 +21,7 @@
     <string name="add_pin_info_assignment_tooltip">Campos com * são obrigatórios</string>
     <string name="add_pin_info_assignment_field_address">Endereço*</string>
     <string name="add_pin_info_assignment_field_type">Tipo de Ocorrência*</string>
-    <string name="add_pin_info_assignment_field_date">Data da Ocorrência*</string>
+    <string name="add_pin_info_assignment_field_date">Data da Ocorrência</string>
     <string name="add_pin_info_assignment_field_date_hint">Data e Hora da Ocorrência</string>
     <string name="add_pin_info_assignment_field_date_button">SELECIONAR DATA E HORA</string>
     <string name="add_pin_info_assignment_field_additional_info">Informações adicionais</string>
