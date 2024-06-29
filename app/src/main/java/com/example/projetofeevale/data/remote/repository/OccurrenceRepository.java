@@ -1,5 +1,8 @@
 package com.example.projetofeevale.data.remote.repository;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.example.projetofeevale.data.model.request.OccurrenceRequest;
 import com.example.projetofeevale.data.model.response.ApiResponse;
 import com.example.projetofeevale.data.model.response.ErrorResponse;
@@ -9,20 +12,29 @@ import com.example.projetofeevale.data.remote.api.IOccurrence;
 import com.example.projetofeevale.http.RetrofitClientInstance;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class OccurrenceRepository {
     IOccurrence service = RetrofitClientInstance.getInstance().create(IOccurrence.class);
 
     public void createOccurrence(OccurrenceRequest occurrenceRequest, ApiCallback<OccurrenceResponse> callback) {
-        Call<ApiResponse<OccurrenceResponse>> call = service.createOccurrence(occurrenceRequest);
+        Map<String, RequestBody> partMap = RetrofitClientInstance.createPartMap(occurrenceRequest.toMap());
+        MultipartBody.Part part = RetrofitClientInstance.createPartFromByteArray(occurrenceRequest.getOccurrenceImage(), "occurrenceImage");
+
+        Call<ApiResponse<OccurrenceResponse>> call = service.createOccurrence(partMap, part);
 
         call.enqueue(new Callback<ApiResponse<OccurrenceResponse>>() {
             @Override
@@ -67,6 +79,27 @@ public class OccurrenceRepository {
             @Override
             public void onFailure(Call<ApiResponse<List<OccurrenceResponse>>> call, Throwable t) {
                 callback.onFailure("Não foi possível buscar ocorrências: ", t.getMessage(), t);
+            }
+        });
+    }
+
+    public void getOccurrenceImage(String occurrenceId, final ApiCallback<Bitmap> callback) {
+        Call<ResponseBody> call = service.getOccurrenceImage(occurrenceId);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                    callback.onSuccess(bitmap);
+                } else {
+                    System.out.println(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callback.onFailure("Não foi possível buscar a imagem da ocorrência: ", t.getMessage(), t);
             }
         });
     }

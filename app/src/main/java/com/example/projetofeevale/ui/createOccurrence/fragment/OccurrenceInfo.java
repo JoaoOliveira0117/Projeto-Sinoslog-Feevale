@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import android.os.Handler;
@@ -43,7 +42,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class OccurrenceInfo extends OccurrenceFragment {
+public class OccurrenceInfo extends BaseOccurrence {
     private static final int HANDLER_DELAY = 500;
     private OccurrenceRequest occurrenceRequest;
     private boolean canShowDropdown = true;
@@ -211,12 +210,10 @@ public class OccurrenceInfo extends OccurrenceFragment {
     public boolean hasEmptyFields() {
         boolean emptyAddress = address.getText().toString().equals("");
         boolean emptyType = occurrenceType.getSelectedItem().toString().equals("");
-        boolean emptyDate = occurrenceDate.getText().toString().equals("");
 
         addressLabel.setTextColor(getLabelColor(emptyAddress));
-        occurrenceDateLabel.setTextColor(getLabelColor(emptyDate));
 
-        return emptyAddress || emptyType || emptyDate;
+        return emptyAddress || emptyType;
     }
 
     @Override

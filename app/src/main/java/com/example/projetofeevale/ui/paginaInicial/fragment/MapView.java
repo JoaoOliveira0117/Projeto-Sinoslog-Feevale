@@ -1,4 +1,4 @@
-package com.example.projetofeevale.fragments;
+package com.example.projetofeevale.ui.paginaInicial.fragment;
 
 import android.annotation.SuppressLint;
 import android.location.Location;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import com.example.projetofeevale.MainActivity;
+import com.example.projetofeevale.activities.MainActivity;
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.interfaces.IBaseGPSListener;
 import com.example.projetofeevale.services.LocationService;
@@ -20,16 +20,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, IBaseGPSListener {
+public class MapView extends Fragment implements OnMapReadyCallback, IBaseGPSListener {
     private View.OnClickListener onAddPin;
     private GoogleMap googleMap;
     private SupportMapFragment mapFragment;
     private LocationService locationService;
     private final float MAP_ZOOM = 15.5f;
-    public MapFragment() {
+    public MapView() {
     }
 
-    public MapFragment(View.OnClickListener onAddPin) {
+    public MapView(View.OnClickListener onAddPin) {
         this.onAddPin = onAddPin;
     }
 

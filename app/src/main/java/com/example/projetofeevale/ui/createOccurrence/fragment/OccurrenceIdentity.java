@@ -14,10 +14,9 @@ import android.widget.TextView;
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.data.model.request.OccurrenceRequest;
 
-public class OccurrenceIdentity extends OccurrenceFragment {
+public class OccurrenceIdentity extends BaseOccurrence {
     private OccurrenceRequest occurrenceRequest;
     private TextView occurrenceNameLabel;
-    private TextView occurrenceDescriptionLabel;
     private EditText occurrenceName;
     private EditText occurrenceDescription;
 
@@ -40,7 +39,6 @@ public class OccurrenceIdentity extends OccurrenceFragment {
         occurrenceDescription = view.findViewById(R.id.editTextAdditionalInfo);
 
         occurrenceNameLabel = view.findViewById(R.id.editTextNameLabel);
-        occurrenceDescriptionLabel = view.findViewById(R.id.editTextAdditionalInfoLabel);
 
         return view;
     }
@@ -56,12 +54,10 @@ public class OccurrenceIdentity extends OccurrenceFragment {
     @Override
     public boolean hasEmptyFields() {
         boolean emptyName = occurrenceName.getText().toString().equals("");
-        boolean emptyDescription = occurrenceDescription.getText().toString().equals("");
 
         occurrenceNameLabel.setTextColor(getLabelColor(emptyName));
-        occurrenceDescriptionLabel.setTextColor(getLabelColor(emptyDescription));
 
-        return emptyName || emptyDescription;
+        return emptyName;
     }
 
     @Override

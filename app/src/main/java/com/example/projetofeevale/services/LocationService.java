@@ -7,16 +7,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.projetofeevale.MainActivity;
+import com.example.projetofeevale.activities.MainActivity;
 import com.example.projetofeevale.interfaces.IBaseGPSListener;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
 
 public class LocationService {
     private final MainActivity mainActivity;

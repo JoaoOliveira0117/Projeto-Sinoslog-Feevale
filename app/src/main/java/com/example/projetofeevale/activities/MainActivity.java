@@ -1,5 +1,5 @@
 
-package com.example.projetofeevale;
+package com.example.projetofeevale.activities;
 
 // Copyright 2020 Google LLC
 //
@@ -25,10 +25,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.projetofeevale.fragments.AccountFragment;
-import com.example.projetofeevale.fragments.ContatoFragment;
-import com.example.projetofeevale.fragments.HomeFragment;
-import com.example.projetofeevale.fragments.MeusPinsFragment;
+import com.example.projetofeevale.R;
+import com.example.projetofeevale.ui.conta.Conta;
+import com.example.projetofeevale.ui.contatos.Contatos;
+import com.example.projetofeevale.ui.paginaInicial.PaginaInicial;
+import com.example.projetofeevale.ui.meusPins.MeusPins;
 import com.example.projetofeevale.services.LocationService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        replaceFragment(new HomeFragment());
+        replaceFragment(new PaginaInicial());
 
         locationService = new LocationService(this);
         locationService.requestPermissions();
@@ -50,24 +51,24 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
-            if (currentFragment instanceof HomeFragment && id == R.id.home ||
-                    currentFragment instanceof MeusPinsFragment && id == R.id.meuspins ||
-                    currentFragment instanceof ContatoFragment && id == R.id.contatos ||
-                    currentFragment instanceof AccountFragment && id == R.id.account) {
+            if (currentFragment instanceof PaginaInicial && id == R.id.home ||
+                    currentFragment instanceof MeusPins && id == R.id.meuspins ||
+                    currentFragment instanceof Contatos && id == R.id.contatos ||
+                    currentFragment instanceof Conta && id == R.id.account) {
                 return true;
             }
 
             if (id == R.id.home) {
-                replaceFragment(new HomeFragment());
+                replaceFragment(new PaginaInicial());
                 return true;
             } else if (id == R.id.meuspins) {
-                replaceFragment(new MeusPinsFragment());
+                replaceFragment(new MeusPins());
                 return true;
             } else if (id == R.id.contatos) {
-                replaceFragment(new ContatoFragment());
+                replaceFragment(new Contatos());
                 return true;
             } else if (id == R.id.account) {
-                replaceFragment(new AccountFragment());
+                replaceFragment(new Conta());
                 return true;
             }
             return false;
