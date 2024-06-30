@@ -14,6 +14,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -25,13 +26,24 @@ public interface IOccurrence {
     @Multipart
     @POST("/occurrences")
     Call<ApiResponse<OccurrenceResponse>> createOccurrence(
+            @Header("Authorization") String token,
             @PartMap Map<String, RequestBody> map,
             @Part MultipartBody.Part occurrenceImage
     );
 
     @GET("/occurrences")
-    Call<ApiResponse<List<OccurrenceResponse>>> getAllOccurrences();
+    Call<ApiResponse<List<OccurrenceResponse>>> getAllOccurrences(
+            @Header("Authorization") String token
+    );
+
+    @GET("/occurrences/me")
+    Call<ApiResponse<List<OccurrenceResponse>>> getMyOccurrences(
+            @Header("Authorization") String token
+    );
 
     @GET("/occurrences/{id}/preview")
-    Call<ResponseBody> getOccurrenceImage(@Path("id") String id);
+    Call<ResponseBody> getOccurrenceImage(
+            @Header("Authorization") String token,
+            @Path("id") String id
+    );
 }

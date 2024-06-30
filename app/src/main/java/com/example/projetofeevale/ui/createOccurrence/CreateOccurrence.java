@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetofeevale.R;
+import com.example.projetofeevale.activities.SislogActivity;
 import com.example.projetofeevale.data.model.request.OccurrenceRequest;
 import com.example.projetofeevale.data.model.response.OccurrenceResponse;
 import com.example.projetofeevale.data.remote.api.ApiCallback;
@@ -139,7 +140,7 @@ public class CreateOccurrence extends Fragment {
             fragment.fillForm();
         }
 
-        new OccurrenceRepository().createOccurrence(occurrenceRequest, new ApiCallback<OccurrenceResponse>() {
+        new OccurrenceRepository((SislogActivity) requireActivity()).createOccurrence(occurrenceRequest, new ApiCallback<OccurrenceResponse>() {
             @Override
             public void onSuccess(OccurrenceResponse data) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
