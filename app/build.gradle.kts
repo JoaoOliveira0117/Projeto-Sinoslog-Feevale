@@ -49,7 +49,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("androidx.exifinterface:exifinterface:1.3.7")
     implementation("com.wdullaer:materialdatetimepicker:4.2.3")
-    testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
@@ -95,17 +94,8 @@ dependencies {
     // AndroidX RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
-    // JUnit for unit tests
-    testImplementation("junit:junit:4.13.2")
-
     // Android Maps Utils
     implementation("com.google.maps.android:android-maps-utils:3.8.2")
-
-    // AndroidX JUnit for instrumented tests
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-
-    // Espresso for UI tests
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Google Places
     implementation("com.google.android.libraries.places:places:3.5.0")
@@ -125,4 +115,9 @@ dependencies {
 
     // Gson for JSON parsing
     implementation("com.google.code.gson:gson:2.10")
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation("androidx.datastore:datastore-preferences-rxjava2:1.1.1")
+    implementation("androidx.datastore:datastore-preferences-rxjava3:1.1.1")
 }

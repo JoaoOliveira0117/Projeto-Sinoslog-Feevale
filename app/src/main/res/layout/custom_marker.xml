@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/customMarker"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="9dp">
+
+    <ImageView
+        android:id="@+id/marker_image_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:background="@drawable/marker_background"
+        android:src="@drawable/ic_no_image"
+        app:layout_constraintBottom_toTopOf="@id/ivTail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Setinha (ImageView) abaixo do LinearLayout -->
+    <ImageView
+        android:id="@+id/ivTail"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:src="@drawable/ic_marker_tail"
+        android:tint="@color/colorPrimary"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,12 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.projetofeevale.R;
 import com.example.projetofeevale.data.remote.api.ApiCallback;
 import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
+import com.example.projetofeevale.services.Auth;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends SislogActivity {
+    private Auth authService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        authService = new Auth(this);
 
         ImageView imageView = findViewById(R.id.image_view);
         TextView enderecoTextView = findViewById(R.id.endereco_text_view);
@@ -44,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
             String titulo = extras.getString("titulo");
             String descricao = extras.getString("descricao");
 
-            new OccurrenceRepository().getOccurrenceImage(id, new ApiCallback<Bitmap>() {
+            new OccurrenceRepository(this).getOccurrenceImage(id, new ApiCallback<Bitmap>() {
 
                 @Override
                 public void onSuccess(Bitmap data) {
@@ -63,5 +67,9 @@ public class DetailActivity extends AppCompatActivity {
             tituloTextView.setText(titulo);
             descricaoTextView.setText(descricao);
         }
+    }
+
+    public Auth getAuthService() {
+        return authService;
     }
 }

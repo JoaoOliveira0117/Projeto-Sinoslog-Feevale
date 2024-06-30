@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofeevale.R;
+import com.example.projetofeevale.activities.SislogActivity;
 import com.example.projetofeevale.ui.meusPins.adapter.PinAdapter;
 import com.example.projetofeevale.data.model.response.OccurrenceResponse;
 import com.example.projetofeevale.data.remote.api.ApiCallback;
@@ -38,10 +39,10 @@ public class MeusPins extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        new OccurrenceRepository().getAllOccurrences(new ApiCallback<List<OccurrenceResponse>>() {
+        new OccurrenceRepository((SislogActivity) requireActivity()).getMyOccurrences(new ApiCallback<List<OccurrenceResponse>>() {
             @Override
             public void onSuccess(List<OccurrenceResponse> data) {
-                adapter = new PinAdapter(data);
+                adapter = new PinAdapter((SislogActivity) requireActivity(), data);
                 recyclerView.setAdapter(adapter);
             }
 

@@ -1,6 +1,10 @@
 package com.example.projetofeevale.data.model.response;
 
+import android.graphics.Bitmap;
+
 import com.example.projetofeevale.data.model.schema.OccurrenceSchema;
+import com.example.projetofeevale.data.remote.api.ApiCallback;
+import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
 
 import java.util.Date;
 

@@ -15,8 +15,10 @@ package com.example.projetofeevale.activities;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetofeevale.R;
+import com.example.projetofeevale.data.model.response.UserResponse;
+import com.example.projetofeevale.data.remote.api.ApiCallback;
+import com.example.projetofeevale.data.remote.repository.AuthRepository;
+import com.example.projetofeevale.services.Auth;
+import com.example.projetofeevale.services.DataStore;
 import com.example.projetofeevale.ui.conta.Conta;
 import com.example.projetofeevale.ui.contatos.Contatos;
 import com.example.projetofeevale.ui.paginaInicial.PaginaInicial;
@@ -33,7 +40,8 @@ import com.example.projetofeevale.ui.meusPins.MeusPins;
 import com.example.projetofeevale.services.LocationService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SislogActivity {
+    private Auth authService;
     private Fragment currentFragment;
     private LocationService locationService;
 
@@ -41,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        authService = new Auth(this);
+        authService.validateToken();
+
+
         setContentView(R.layout.activity_main);
         replaceFragment(new PaginaInicial());
 
@@ -96,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permissão é necessária para o funcionamento da aplicação", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public Auth getAuthService() {
+        return authService;
     }
 }
 

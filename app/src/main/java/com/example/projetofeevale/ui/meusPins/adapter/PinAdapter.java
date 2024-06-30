@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofeevale.R;
+import com.example.projetofeevale.activities.SislogActivity;
 import com.example.projetofeevale.data.model.response.OccurrenceResponse;
 import com.example.projetofeevale.data.remote.api.ApiCallback;
 import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
@@ -22,8 +23,10 @@ import java.util.List;
 public class PinAdapter extends RecyclerView.Adapter<PinAdapter.ViewHolder> {
 
     private final List<OccurrenceResponse> occurrences;
+    private SislogActivity sislogActivity;
 
-    public PinAdapter(List<OccurrenceResponse> occurrences) {
+    public PinAdapter(SislogActivity sislogActivity, List<OccurrenceResponse> occurrences) {
+        this.sislogActivity = sislogActivity;
         this.occurrences = occurrences;
     }
 
@@ -40,16 +43,17 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.ViewHolder> {
         OccurrenceResponse occurrence = occurrences.get(position);
 
         if (occurrence.getImageUrl() != null) {
-            new OccurrenceRepository().getOccurrenceImage(occurrence.get_id(), new ApiCallback<Bitmap>() {
+            new OccurrenceRepository(sislogActivity).getOccurrenceImage(occurrence.get_id(), new ApiCallback<Bitmap>() {
 
                 @Override
                 public void onSuccess(Bitmap data) {
                     holder.imageView.setImageBitmap(data);
+                    holder.imageView.setPadding(0,0,0,0);
                 }
 
                 @Override
                 public void onFailure(String message, String cause, Throwable t) {
-
+                    holder.imageView.setPadding(20,20,20,20);
                 }
             } );
         }
