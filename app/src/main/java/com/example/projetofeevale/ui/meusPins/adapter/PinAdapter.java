@@ -18,7 +18,12 @@ import com.example.projetofeevale.data.remote.api.ApiCallback;
 import com.example.projetofeevale.data.remote.repository.OccurrenceRepository;
 import com.example.projetofeevale.activities.DetailActivity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class PinAdapter extends RecyclerView.Adapter<PinAdapter.ViewHolder> {
 
@@ -59,7 +64,7 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.ViewHolder> {
         }
         holder.titleTextView.setText(occurrence.getTitle());
         holder.typeTextView.setText(occurrence.getType());
-        holder.dataTextView.setText(occurrence.getDate());
+        holder.dataTextView.setText(occurrence.getParsedDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +74,8 @@ public class PinAdapter extends RecyclerView.Adapter<PinAdapter.ViewHolder> {
                 intent.putExtra("endereco", occurrence.getAddress());
                 intent.putExtra("latitude", occurrence.getLatitude());
                 intent.putExtra("longitude", occurrence.getLongitude());
+                intent.putExtra("dataHora", occurrence.getParsedDate());
                 intent.putExtra("tipo", occurrence.getType());
-                intent.putExtra("dataHora", occurrence.getDate());
                 intent.putExtra("titulo", occurrence.getTitle());
                 intent.putExtra("descricao", occurrence.getDescription());
 
