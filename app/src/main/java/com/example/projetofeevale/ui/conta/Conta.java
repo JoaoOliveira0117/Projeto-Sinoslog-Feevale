@@ -40,6 +40,10 @@ public class Conta extends Fragment {
         new AuthRepository((SislogActivity) requireActivity()).getUserMe(new ApiCallback<UserResponse>() {
             @Override
             public void onSuccess(UserResponse data) {
+                if (data == null) {
+                    mainActivity.startLoginActivity();
+                }
+
                 userName.setText(data.getName());
             }
 
