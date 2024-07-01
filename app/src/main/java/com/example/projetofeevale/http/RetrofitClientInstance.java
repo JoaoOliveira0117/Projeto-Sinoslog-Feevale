@@ -1,5 +1,7 @@
 package com.example.projetofeevale.http;
 
+import com.example.projetofeevale.BuildConfig;
+
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
     private static Retrofit retrofit;
-    private static String baseURL = "http://10.0.2.2:3000";
+    private static String baseURL = BuildConfig.PROJETO_FEEVALE_API_URL;
 
     public static OkHttpClient provideOkHttpClient() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

@@ -15,7 +15,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["MAPS_API_KEY"] = project.properties["MAPS_API_KEY"] as Any
+        manifestPlaceholders["PROJETO_FEEVALE_API_URL"] = project.properties["PROJETO_FEEVALE_API_URL"] as Any
+
         buildConfigField("String", "MAPS_API_KEY", project.properties["MAPS_API_KEY"].toString())
+        buildConfigField("String", "PROJETO_FEEVALE_API_URL", project.properties["PROJETO_FEEVALE_API_URL"].toString())
     }
 
     buildTypes {
