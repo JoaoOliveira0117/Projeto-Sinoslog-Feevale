@@ -137,11 +137,13 @@ public class OccurrenceImageUpload extends BaseOccurrence {
 
     @Override
     public void fillForm() {
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
+        if(imageView.getDrawable() instanceof BitmapDrawable ){
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
 
-        occurrenceRequest.setOccurrenceImage(byteArrayOutputStream);
+            occurrenceRequest.setOccurrenceImage(byteArrayOutputStream);
+        }
     }
 }
