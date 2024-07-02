@@ -50,6 +50,10 @@ public class RetrofitClientInstance {
     }
 
     public static MultipartBody.Part createPartFromByteArray(ByteArrayOutputStream byteArrayOutputStream, String name) {
+        if (byteArrayOutputStream == null) {
+            return null;
+        }
+
         RequestBody requestFile = RequestBody.create(
                 MediaType.parse("image/jpeg"), byteArrayOutputStream.toByteArray());
         return MultipartBody.Part.createFormData(name, "image.jpg", requestFile);
