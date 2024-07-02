@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,7 +57,7 @@ public class OccurrenceImageUpload extends BaseOccurrence {
         imageView = view.findViewById(R.id.upload_image);
 
         selecionarImagemButton = view.findViewById(R.id.upload_image_button);
-        selecionarImagemButton.setOnClickListener(new View.OnClickListener() {
+        selecionarImagemButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 buildAlertDialog().show();
@@ -115,7 +116,6 @@ public class OccurrenceImageUpload extends BaseOccurrence {
     private AlertDialog.Builder buildAlertDialog() {
         final CharSequence[] items = {"Tirar Foto", "Escolher da biblioteca", "Cancelar"};
         boolean hasCameraPermissions = checkCameraPermissions();
-        boolean hasLibraryPermissions = checkLibraryPermissions();
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Selecionar Imagem")
@@ -125,7 +125,8 @@ public class OccurrenceImageUpload extends BaseOccurrence {
                         if (hasCameraPermissions && items[which].equals("Tirar Foto")) {
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             activityResultLauncher.launch(intent);
-                        } else if (hasLibraryPermissions && items[which].equals("Escolher da biblioteca")) {
+                        } else if (hasCameraPermissions && items[which].equals("Escolher da biblioteca")) {
+
                             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             activityResultLauncher.launch(intent);
                         } else {
